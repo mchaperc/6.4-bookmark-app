@@ -11,14 +11,27 @@ export default Backbone.View.extend({
 
 	initialize: function() {
 		this.render();
+		console.log(this.collection);
 	},
 
 	render: function() {
-		this.$el.html(this.template(this.model.toJSON()));
+		this.$el.html(this.template(this.collection.toJSON()));
 	},
 
-	addBookmark: function() {
-		console.log('add bookmark');
+	addBookmark: function(e) {
+		e.preventDefault();
+		var bookUrl = this.$('.bookmark-url-input').val();
+		var bookTitle = this.$('.bookmark-title-input').val();
+		var bookTag = this.$('.bookmark-tag-input').val();
+		this.collection.create({
+			url: bookUrl,
+			title: bookTitle,
+			tag: bookTag
+		});
+		this.$('form').each(function() {
+			this.reset();
+		})
+		console.log('created');
 	}
 
 });
