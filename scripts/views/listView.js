@@ -21,13 +21,15 @@ export default Backbone.View.extend({
 	showTags: function(e) {
 
 		var tag = e.target.innerHTML;
+		console.log(tag);
 		var filteredList = [];
 		filteredList.push(_.filter(this.collection.models, (function(item) {
 			return item.attributes.tag === tag
 		})));
 		filteredList = _.flatten(filteredList);
-		console.log(JSON.stringify(filteredList));
-		this.$el.html(this.template(JSON.stringify(filteredList)));
+		console.log(filteredList);
+		this.filteredCollection = new Backbone.Collection(filteredList);
+		this.$el.html(this.template(this.filteredCollection.toJSON()));
 
 	}
 
